@@ -52,6 +52,6 @@ Follow these steps when asked a question:
 ### Step 5: Logging the Query
 - Append a query log entry at the bottom of `/wiki/log.md` using the following exact format:
   ```markdown
-  ## [YYYY-MM-DD] query | <Short summary of the question asked>
+  [YYYY-MM-DD] query | <Short summary of the question asked>
   ```
   *(Note: Replace `YYYY-MM-DD` with the current system date).*

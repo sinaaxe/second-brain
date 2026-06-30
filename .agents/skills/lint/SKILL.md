@@ -24,7 +24,7 @@ Scan the link map and files for the following issues:
 3. **Contradictions & Stale Claims**: Audit contents for logical contradictions, or claims that have been superseded by newer sources or entries.
 4. **Missing Cross-References**: Look for pages that mention important concepts or entities that already have dedicated files in `/wiki` but are not currently linked in the text.
 5. **Missing Pages**: Find important concepts or entities that are frequently mentioned across multiple pages but do not yet have their own page in the wiki.
-6. **Formatting Inconsistencies**: Ensure all files start with correct YAML frontmatter, use `kebab-case.md` names, and conform to the default clear, factual, and terse tone. Verify that no media assets (images, videos, drawings, etc.) are present in the `/wiki/index.md` tables' summary columns, and verify index tables are well-formed.
+6. **Formatting Inconsistencies & Markdown Issues**: Ensure all files start with correct YAML frontmatter, use `kebab-case.md` names, and conform to the default clear, factual, and terse tone. Check for and fix any markdown syntax issues, including misaligned, broken, or poorly formatted markdown tables (in `index.md` or any other wiki pages). Verify that no media assets (images, videos, drawings, etc.) are present in the `/wiki/index.md` tables' summary columns, and verify index tables are well-formed.
 7. **Categorization & Directory Audit**:
    - Verify that every wiki page is stored in its correct category subdirectory under `/wiki/` (e.g. `/wiki/<dynamic-category>/<kebab-case-name>.md`).
    - Check if any individual page has evolved and needs to be moved/recategorized based on its current content.
@@ -56,5 +56,5 @@ Generate the audit report using the following structure:
 ### Step 5: Logging
 - Append an entry to `/wiki/log.md` with the lint activity. Use the current date:
   ```markdown
-  ## [YYYY-MM-DD] lint | <Brief summary of findings and fixes performed>
+  [YYYY-MM-DD] lint | <Brief summary of findings and fixes performed>
   ```

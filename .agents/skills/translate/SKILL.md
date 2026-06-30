@@ -63,7 +63,7 @@ Ensure every page meets the following standards:
     ```
 - **Append to `/wiki/log.md`**: Append a new log entry at the bottom of the file following this exact format:
   ```markdown
-  ## [YYYY-MM-DD] ingest | <Title/Topic Name>
+  [YYYY-MM-DD] ingest | <Title/Topic Name>
   ```
   *(Note: Replace `YYYY-MM-DD` with the current system date).*
 
