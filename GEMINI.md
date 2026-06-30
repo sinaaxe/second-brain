@@ -19,7 +19,7 @@ You are working in a personal second brain — a knowledge management system, no
   - Used as the first point of entry to discover relevant files for answering questions.
 - **/wiki/log.md** (Chronological Log):
   - An append-only historical log of all operations performed.
-  - Each entry must start with a consistent date prefix: `## [YYYY-MM-DD] <operation> | <Title/Summary>` (e.g., `ingest`, `query`, or `lint`).
+  - Each entry must start with a consistent date prefix: `[YYYY-MM-DD] <operation> | <Title/Summary>` (e.g., `ingest`, `query`, or `lint`).
 
 ## Common Operational Tasks
 
