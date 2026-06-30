@@ -6,13 +6,15 @@ You are working in a personal second brain — a knowledge management system, no
     - `/raw/daily` — Daily journal entries and daily captures.
     - `/raw/others` — Uncategorized random captures.
 - `/wiki` — Cleaned, structured, and interlinked knowledge notes in Obsidian-compatible Markdown. All pages must start with YAML frontmatter.
+    - `/wiki/<dynamic-category>/` — Pages are organized into dynamic category subdirectories based on their content (e.g., `/wiki/books/`, `/wiki/programming/`, `/wiki/personal/`, `/wiki/tools/`, etc.).
 - `/archive` — Historical record of processed `/raw` files. The directory structure must exactly mirror `/raw` (e.g. `/raw/daily/note.md` -> `/archive/daily/note.md`).
 
 ## Core Files
 
 - **/wiki/index.md** (Content Catalog):
-  - A structured catalog of all pages in the wiki, categorized by type (e.g., entities, concepts, sources).
-  - Each item must list a Markdown link to the file, a concise one-line summary, and metadata (e.g., date, source count).
+  - A structured catalog of all pages in the wiki, categorized under high-level headings dynamically determined by topic content.
+  - Under each heading, pages must be listed in a Markdown table with the columns: `| Page Link | One-Line Summary | Date | Sources |`.
+  - **Hard Rule**: Do NOT include images, videos, or drawings in the summary column. It must contain only text.
   - Must be updated during every ingest operation.
   - Used as the first point of entry to discover relevant files for answering questions.
 - **/wiki/log.md** (Chronological Log):

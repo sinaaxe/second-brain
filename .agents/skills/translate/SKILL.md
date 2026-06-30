@@ -17,11 +17,12 @@ Follow these steps precisely for each file in `/raw`:
 - Read the content of the raw file.
 - **Topic Extraction**: Be aware that raw files, and daily notes in particular, often contain multiple unrelated topics. Identify and extract each distinct concept, entity, or topic.
 - **Topic Routing**: It is critical that you separate these different topics and route/merge each topic to its correct, corresponding wiki page (adhering to the "one topic per file" rule). Do not bundle unrelated topics onto a single page.
-- Search `/wiki/index.md` or scan `/wiki` to see if pages for each of these topics already exist.
+- **Dynamic Categorization**: Dynamically determine a high-level category folder name for each topic based on its content (e.g., `/wiki/books/`, `/wiki/programming/`, `/wiki/personal/`, `/wiki/tools/`, etc.).
+- Search `/wiki/index.md` or scan `/wiki` to see if pages for each of these topics already exist (possibly in a category directory).
 
 ### Step 3: Read-Then-Merge
 - **Hard Rule**: Never overwrite a `/wiki` entry blindly.
-- If a wiki page already exists for a topic:
+- If a wiki page already exists for a topic (in any category folder):
   1. Read the existing page's contents.
   2. Merge the new information cleanly, resolving any contradictions or redundancies.
   3. If you find conflicting facts and are uncertain, document the uncertainty directly in the content (e.g., noting "Source A claims X, but Source B claims Y").
@@ -38,7 +39,7 @@ Ensure every page meets the following standards:
    source: "relative/path/to/original/raw/file"
    ---
    ```
-2. **File Naming**: Name files in `kebab-case.md` matching the topic (e.g., `neural-networks.md`).
+2. **File Naming & Path**: Name files in `kebab-case.md` matching the topic, and save them under their determined category directory (e.g., `wiki/<dynamic-category>/<kebab-case-name>.md`).
 3. **Tone & Style**: Use a clear, factual, and terse tone. Preserve the user's specific phrasing if it carries personal signal or context.
 4. **Structural Rules**:
    - Use headings only if the document is long enough to require sub-sections.
@@ -46,14 +47,20 @@ Ensure every page meets the following standards:
 5. **Task Filtering**:
    - Checkboxes/tasks starting with `- [ ]` or `- [/-]` must NOT be copied into the wiki. Extract the underlying knowledge/links and write them as standard markdown text, but discard the task format.
    - **Do not translate, edit, or modify Obsidian tasks query blocks** (e.g., ````tasks ... ```` code blocks). Keep them completely unchanged.
-6. **Media Assets**: If there are screenshots, images, drawings, or other media files embedded or associated with the raw files that need to be added to the wiki, copy them to the `wiki/media/` folder and link them in the markdown using the relative path (e.g., `![[media/image.png]]` or `![image](media/image.png)`).
+6. **Media Assets**: If there are screenshots, images, drawings, or other media files embedded or associated with the raw files that need to be added to the wiki, copy them to the `wiki/media/` folder and link them in the markdown using the relative path (e.g., `![[media/image.png]]` or `![image](../media/image.png)`).
 7. **External Links**: If the raw files mention any external URLs or resources, ensure you reference and carry them over to the wiki page so no source links are lost.
 
 ### Step 5: Index and Log Updates
-- **Update `/wiki/index.md`**: Add or update the page entry under its corresponding category (e.g., Entities, Concepts, Sources). The entry must follow this format:
-  ```markdown
-  - [Page Title](file:///home/sina/Code/second-brain/wiki/kebab-case-name.md) — A one-line summary of the topic. | Date: YYYY-MM-DD | Sources: N
-  ```
+- **Update `/wiki/index.md`**: Add or update the page entry under its corresponding category table.
+  - The index is structured with dynamic high-level category headings matching the folders (e.g., `# Books`, `# Programming`, `# Tools`).
+  - Under each heading, display the pages in a Markdown table with the columns: `| Page Link | One-Line Summary | Date | Sources |`.
+  - **Hard Rule**: Do NOT include any media (images, videos, drawings, or links to media) in the summary column. Put only plain text in the summary column.
+  - Format example:
+    ```markdown
+    | Page Link | One-Line Summary | Date | Sources |
+    |---|---|---|---|
+    | [Page Title](wiki/concepts/kebab-case-name.md) | Summary of the page. | YYYY-MM-DD | N |
+    ```
 - **Append to `/wiki/log.md`**: Append a new log entry at the bottom of the file following this exact format:
   ```markdown
   ## [YYYY-MM-DD] ingest | <Title/Topic Name>

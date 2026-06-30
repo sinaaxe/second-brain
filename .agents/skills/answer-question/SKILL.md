@@ -20,7 +20,7 @@ Follow these steps when asked a question:
 ### Step 3: Synthesis & Answer Formulation
 - Synthesize an answer that is clear, factual, and backed by citations.
 - **Citation Format**: Reference sources using standard markdown links pointing directly to the file URI:
-  `[Page Title](file:///home/sina/Code/second-brain/wiki/kebab-case-name.md)` or `[Raw File Name](file:///home/sina/Code/second-brain/archive/path/to/file.md)`.
+  `[Page Title](wiki/<dynamic-category>/<kebab-case-name>.md)` or `[Raw File Name](archive/path/to/file.md)`.
 - Highlight connections, comparisons, or discrepancies found between different pages.
 
 ### Step 4: Compound Knowledge Proposing
@@ -36,7 +36,7 @@ Follow these steps when asked a question:
      type: qa-synthesis
      date: YYYY-MM-DD
      question: "Original user question"
-     sources: ["file:///home/sina/Code/second-brain/wiki/source-1.md"]
+     sources: ["wiki/<dynamic-category>/source-1.md"]
      ---
 
      # QA: Original User Question

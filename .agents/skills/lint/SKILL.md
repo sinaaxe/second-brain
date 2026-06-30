@@ -24,7 +24,11 @@ Scan the link map and files for the following issues:
 3. **Contradictions & Stale Claims**: Audit contents for logical contradictions, or claims that have been superseded by newer sources or entries.
 4. **Missing Cross-References**: Look for pages that mention important concepts or entities that already have dedicated files in `/wiki` but are not currently linked in the text.
 5. **Missing Pages**: Find important concepts or entities that are frequently mentioned across multiple pages but do not yet have their own page in the wiki.
-6. **Formatting Inconsistencies**: Ensure all files start with correct YAML frontmatter, use `kebab-case.md` names, and conform to the default clear, factual, and terse tone.
+6. **Formatting Inconsistencies**: Ensure all files start with correct YAML frontmatter, use `kebab-case.md` names, and conform to the default clear, factual, and terse tone. Verify that no media assets (images, videos, drawings, etc.) are present in the `/wiki/index.md` tables' summary columns, and verify index tables are well-formed.
+7. **Categorization & Directory Audit**:
+   - Verify that every wiki page is stored in its correct category subdirectory under `/wiki/` (e.g. `/wiki/<dynamic-category>/<kebab-case-name>.md`).
+   - Check if any individual page has evolved and needs to be moved/recategorized based on its current content.
+   - Perform a high-level taxonomy review to check if the entire wiki's folder and table classification structure needs a global reorganization (e.g. merging similar categories or defining new ones to group files better). Propose folder movements and index table updates for any reorganization.
 
 ### Step 3: Reporting Format
 Generate the audit report using the following structure:
@@ -37,11 +41,12 @@ Generate the audit report using the following structure:
 - **Contradictions & Stale Claims**: [None / Description of issues]
 - **Missing Cross-References**: [None / List of pages and suggested links]
 - **Missing Pages / Concepts**: [None / List of suggested new pages]
-- **Formatting Issues**: [None / List of files with formatting violations]
+- **Formatting & Index Media Issues**: [None / List of formatting issues]
+- **Categorization & Taxonomy Reorgs**: [None / List of files needing recategorization or taxonomy suggestions]
 
 ## 2. Proposed Remedies & Action Plan
 - **Automated Fixes (Ready to Execute)**: [e.g., Simple typo fixes, inserting cross-references to existing pages]
-- **Requires User Review**: [e.g., Resolving contradictions, creating new concept pages]
+- **Requires User Review**: [e.g., Resolving contradictions, page recategorizations, global taxonomy restructuring]
 ```
 
 ### Step 4: Proposing & Executing Fixes
