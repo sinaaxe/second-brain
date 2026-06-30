@@ -5,27 +5,51 @@ description: Performs a health-check of the wiki pages, identifying contradictio
 
 This skill governs the health-checking and maintenance of the `/wiki` directory. It scans the wiki files to ensure high quality, internal consistency, and discoverability.
 
-## Audit Workflow
+## Step-by-Step Audit Pipeline
 
 Follow these steps to perform a wiki audit:
 
-### 1. Catalog and Index Verification
-- Load all wiki pages and build a map of internal links (outgoing and incoming).
-- Scan the wiki files for the following issues:
-  - **Orphan Pages**: Identify pages that have no incoming links from *any* other page in the `/wiki` directory (including `index.md`). If a page is linked in `index.md` or any other page, it is NOT considered an orphan.
-  - **Broken Links**: Find internal links that point to files or headings that do not exist. Propose to either fix the links (if the target file was renamed or has a similar name) or remove the broken links.
-  - **Contradictions & Stale Claims**: Analyze pages for logical contradictions, or claims that have been superseded by newer sources or entries.
-  - **Missing Cross-References**: Look for pages that mention important concepts or entities that already have their own dedicated files but are not currently linked.
-  - **Missing Pages**: Find important concepts or entities that are frequently mentioned across multiple pages but do not yet have their own page in the wiki. Propose creating them.
-  - **Formatting Inconsistencies**: Ensure all files start with proper YAML frontmatter and conform to the default clear, factual, and terse tone.
+### Step 1: Cataloging and Link-Map Building
+- Read the content of all markdown files in `/wiki` (including `index.md`).
+- Build an internal link map tracking:
+  - Every link target (file paths and anchors).
+  - Every inbound link to each file.
 
-### 2. Reporting & Remediation
-- Present a detailed report of findings categorized by the issue types above.
-- For simple or obvious issues (such as fixing a typo in a link, adding a missing cross-reference to an existing page, or minor formatting issues), offer to fix them automatically.
-- For complex issues (such as resolving contradictions or creating new concept pages), present the recommended action plan to the user for confirmation.
+### Step 2: Running Audit Checks
+Scan the link map and files for the following issues:
+1. **Orphan Pages**: Identify pages that have no incoming links from *any* page in the `/wiki` directory (including `index.md`). 
+   - *Note*: If a page has at least one inbound link from `/wiki/index.md` or any other page, it is NOT considered an orphan.
+2. **Broken Links**: Find internal links that point to files or headings/anchors that do not exist.
+   - Look for target files that might have been renamed or have a close typographic match.
+3. **Contradictions & Stale Claims**: Audit contents for logical contradictions, or claims that have been superseded by newer sources or entries.
+4. **Missing Cross-References**: Look for pages that mention important concepts or entities that already have dedicated files in `/wiki` but are not currently linked in the text.
+5. **Missing Pages**: Find important concepts or entities that are frequently mentioned across multiple pages but do not yet have their own page in the wiki.
+6. **Formatting Inconsistencies**: Ensure all files start with correct YAML frontmatter, use `kebab-case.md` names, and conform to the default clear, factual, and terse tone.
 
-### 3. Log the Pass
+### Step 3: Reporting Format
+Generate the audit report using the following structure:
+```markdown
+# Wiki Audit Report - [YYYY-MM-DD]
+
+## 1. Summary of Issues Found
+- **Orphan Pages**: [None / List of files]
+- **Broken Links**: [None / List of source files and broken targets]
+- **Contradictions & Stale Claims**: [None / Description of issues]
+- **Missing Cross-References**: [None / List of pages and suggested links]
+- **Missing Pages / Concepts**: [None / List of suggested new pages]
+- **Formatting Issues**: [None / List of files with formatting violations]
+
+## 2. Proposed Remedies & Action Plan
+- **Automated Fixes (Ready to Execute)**: [e.g., Simple typo fixes, inserting cross-references to existing pages]
+- **Requires User Review**: [e.g., Resolving contradictions, creating new concept pages]
+```
+
+### Step 4: Proposing & Executing Fixes
+- Offer to fix simple or obvious formatting/link errors automatically.
+- For complex fixes (such as resolving contradictions or writing new concept pages), present the proposed remedies to the user for approval.
+
+### Step 5: Logging
 - Append an entry to `/wiki/log.md` with the lint activity. Use the current date:
   ```markdown
-  ## [YYYY-MM-DD] lint | <Summary of findings and fixes performed>
+  ## [YYYY-MM-DD] lint | <Brief summary of findings and fixes performed>
   ```

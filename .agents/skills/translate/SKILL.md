@@ -5,47 +5,65 @@ description: Translates raw notes and links in the /raw folder into structured, 
 
 This skill governs the ingestion and processing of raw captures (notes, web clips, drafts) from the `/raw` directory into the structured, Obsidian-compatible `/wiki` directory.
 
-## Ingest Workflow
+## Step-by-Step Ingest Pipeline
 
 Follow these steps precisely for each file in `/raw`:
 
-### 1. File Discovery
-Scan the `/raw` folder (including `/raw/daily` and `/raw/others`) for unprocessed files. Process them one at a time.
+### Step 1: File Discovery
+- Recursively scan `/raw` (including `/raw/daily` and `/raw/others`) to list all raw files.
+- Process files sequentially, one at a time, to avoid merge conflicts and index corruption.
 
-### 2. Read and Merge
-- Read the content of the target raw file.
-- Identify the core concepts, entities, or topics.
-- Check the existing `/wiki` directory (using the `/wiki/index.md` catalog or a search tool) to see if pages for these topics already exist.
-- **Hard Rule**: Never overwrite a `/wiki` entry blindly. If a page exists, read its contents first, then merge the new information cleanly.
+### Step 2: Read & Match
+- Read the content of the raw file.
+- **Topic Extraction**: Be aware that raw files, and daily notes in particular, often contain multiple unrelated topics. Identify and extract each distinct concept, entity, or topic.
+- **Topic Routing**: It is critical that you separate these different topics and route/merge each topic to its correct, corresponding wiki page (adhering to the "one topic per file" rule). Do not bundle unrelated topics onto a single page.
+- Search `/wiki/index.md` or scan `/wiki` to see if pages for each of these topics already exist.
 
-### 3. Wiki Page Structure & Voice
-- All pages must start with YAML frontmatter containing metadata (e.g., `title`, `date`, `tags`, `source`).
-- **File Naming**: Use one topic per file, and name files using `kebab-case.md`.
-- **Tone**: Keep it clear, factual, and terse.
-- **Preservation**: Preserve the user's specific phrasing if it carries signal.
-- **Formatting**:
-  - Use headings only when the entry is long enough to need them.
-  - Use bullets only when the content is genuinely a list.
-  - **Tasks**: Do NOT add Obsidian tasks that start with `- [ ]` or `- [/-]` to the wiki as tasks. If they contain valuable knowledge or links, extract and add that knowledge to the wiki, but discard the raw checkbox task structure.
+### Step 3: Read-Then-Merge
+- **Hard Rule**: Never overwrite a `/wiki` entry blindly.
+- If a wiki page already exists for a topic:
+  1. Read the existing page's contents.
+  2. Merge the new information cleanly, resolving any contradictions or redundancies.
+  3. If you find conflicting facts and are uncertain, document the uncertainty directly in the content (e.g., noting "Source A claims X, but Source B claims Y").
+- If the page does not exist, prepare to create it as a new file.
 
-### 4. Index and Log Updates
-- **Update `/wiki/index.md`**: On every ingest, update the catalog index. List the page under its appropriate category (entities, concepts, sources, etc.) with:
-  - A markdown link to the file.
-  - A one-line summary.
-  - Metadata (e.g., date of ingest, source count).
-- **Append to `/wiki/log.md`**: Add an append-only entry to the log with a consistent prefix. Use the current date:
+### Step 4: Wiki Page Formatting & Conventions
+Ensure every page meets the following standards:
+1. **YAML Frontmatter**: Every file must start with a YAML frontmatter block containing:
+   ```yaml
+   ---
+   title: "Page Title"
+   date: YYYY-MM-DD
+   tags: [tag1, tag2]
+   source: "relative/path/to/original/raw/file"
+   ---
+   ```
+2. **File Naming**: Name files in `kebab-case.md` matching the topic (e.g., `neural-networks.md`).
+3. **Tone & Style**: Use a clear, factual, and terse tone. Preserve the user's specific phrasing if it carries personal signal or context.
+4. **Structural Rules**:
+   - Use headings only if the document is long enough to require sub-sections.
+   - Use bullets only when presenting a genuine list.
+5. **Task Filtering**:
+   - Checkboxes/tasks starting with `- [ ]` or `- [/-]` must NOT be copied into the wiki. Extract the underlying knowledge/links and write them as standard markdown text, but discard the task format.
+   - **Do not translate, edit, or modify Obsidian tasks query blocks** (e.g., ````tasks ... ```` code blocks). Keep them completely unchanged.
+
+### Step 5: Index and Log Updates
+- **Update `/wiki/index.md`**: Add or update the page entry under its corresponding category (e.g., Entities, Concepts, Sources). The entry must follow this format:
+  ```markdown
+  - [Page Title](file:///home/sina/Code/second-brain/wiki/kebab-case-name.md) — A one-line summary of the topic. | Date: YYYY-MM-DD | Sources: N
+  ```
+- **Append to `/wiki/log.md`**: Append a new log entry at the bottom of the file following this exact format:
   ```markdown
   ## [YYYY-MM-DD] ingest | <Title/Topic Name>
   ```
+  *(Note: Replace `YYYY-MM-DD` with the current system date).*
 
-### 5. Archiving Processed Files
-- Once the content is successfully integrated into the `/wiki` and logged:
-  - Create the corresponding destination subdirectory under `/archive` if it does not already exist.
-  - Move the raw file to `/archive` while preserving the exact relative path structure.
-  - **Hard Rule**: Never delete anything from `/raw` or `/archive`. Move files only.
-  
-  *Example Command to execute:*
-  ```bash
-  # For a file raw/daily/my-note.md:
-  mkdir -p "archive/daily" && mv "raw/daily/my-note.md" "archive/daily/my-note.md"
-  ```
+### Step 6: Archiving
+- Replicate the parent directory structure of the raw file under `/archive` (e.g., if processing `raw/daily/note.md`, ensure `archive/daily` exists).
+- Move the processed raw file to `/archive` using terminal commands to ensure safety.
+- **Hard Rule**: Never delete files from `/raw` or `/archive`. Move files only.
+
+*Example execution command:*
+```bash
+mkdir -p "archive/daily" && mv "raw/daily/my-note.md" "archive/daily/my-note.md"
+```
