@@ -71,8 +71,11 @@ Ensure every page meets the following standards:
 - Replicate the parent directory structure of the raw file under `/archive` (e.g., if processing `raw/daily/note.md`, ensure `archive/daily` exists).
 - Move the processed raw file to `/archive` using terminal commands to ensure safety.
 - **Hard Rule**: Never delete files from `/raw` or `/archive`. Move files only.
+- **Directory Cleanup**: After moving the files, clean up any empty folders or subdirectories under `/raw` to ensure that only the `/raw/daily` and `/raw/others` folders remain. Do not delete daily or others folders, even if they are empty.
 
 *Example execution command:*
 ```bash
 mkdir -p "archive/daily" && mv "raw/daily/my-note.md" "archive/daily/my-note.md"
+# Clean up any other subdirectories under raw/
+find raw/ -mindepth 1 -maxdepth 1 -type d ! -name "daily" ! -name "others" -exec rm -rf {} +
 ```
