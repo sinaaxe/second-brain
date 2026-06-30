@@ -46,6 +46,8 @@ Ensure every page meets the following standards:
 5. **Task Filtering**:
    - Checkboxes/tasks starting with `- [ ]` or `- [/-]` must NOT be copied into the wiki. Extract the underlying knowledge/links and write them as standard markdown text, but discard the task format.
    - **Do not translate, edit, or modify Obsidian tasks query blocks** (e.g., ````tasks ... ```` code blocks). Keep them completely unchanged.
+6. **Media Assets**: If there are screenshots, images, drawings, or other media files embedded or associated with the raw files that need to be added to the wiki, copy them to the `wiki/media/` folder and link them in the markdown using the relative path (e.g., `![[media/image.png]]` or `![image](media/image.png)`).
+7. **External Links**: If the raw files mention any external URLs or resources, ensure you reference and carry them over to the wiki page so no source links are lost.
 
 ### Step 5: Index and Log Updates
 - **Update `/wiki/index.md`**: Add or update the page entry under its corresponding category (e.g., Entities, Concepts, Sources). The entry must follow this format:
